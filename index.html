@@ -5,7 +5,7 @@
   <title>Thanksgiving Family Bingo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Make sure this matches your CSS filename: style.css -->
+  <!-- Make sure this matches your CSS filename -->
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -13,11 +13,14 @@
     <h1>Thanksgiving Family Bingo</h1>
     <p class="subheading">Each phone gets its own random card. Tap squares as they happen.</p>
 
-       <div class="controls">
-        <button id="new-card-btn">New Card on This Phone</button>
-      </div>
-      
-      <p id="timestamp" class="timestamp"></p>
+    <div class="controls">
+      <button id="new-card-btn">New Card on This Phone</button>
+    </div>
+
+    <!-- Card creation timestamp -->
+    <p id="timestamp" class="timestamp"></p>
+
+    <div id="card" class="card" aria-label="Bingo board"></div>
 
     <p class="hint">
       Tap a square to mark it. The app will shout when you get BINGO!
