@@ -71,6 +71,8 @@ function generateNewCardData() {
   createdAt: new Date().toISOString()
 };
 
+}
+
 function saveCardToStorage(data) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
 }
