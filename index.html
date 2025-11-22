@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Thanksgiving Family Bingo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <h1>Thanksgiving Family Bingo</h1>
+    <p class="subheading">Each phone gets its own random card. Tap squares as they happen.</p>
+
+    <div class="controls">
+      <button id="new-card-btn">New Card on This Phone</button>
+    </div>
+
+    <div id="card" class="card" aria-label="Bingo board"></div>
+
+    <p class="hint">
+      Tap a square to mark it. The app will shout when you get BINGO!
+    </p>
+
+    <div id="toast" class="toast">BINGO! 🦃</div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
