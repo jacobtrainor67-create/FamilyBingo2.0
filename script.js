@@ -65,8 +65,11 @@ function generateNewCardData() {
     sq.free && i === Math.floor((BOARD_SIZE * BOARD_SIZE) / 2)
   );
 
-  return { squares, marked };
-}
+  return {
+  squares,
+  marked,
+  createdAt: new Date().toISOString()
+};
 
 function saveCardToStorage(data) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
