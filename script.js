@@ -32,6 +32,7 @@ const STORAGE_KEY = "thanksgivingFamilyBingoCard_v1";
 const cardEl = document.getElementById("card");
 const newCardBtn = document.getElementById("new-card-btn");
 const toastEl = document.getElementById("toast");
+const timestampEl = document.getElementById("timestamp");
 
 function shuffle(array) {
   const arr = array.slice();
@@ -66,14 +67,18 @@ function generateNewCardData() {
   );
 
   return {
-  squares,
-  marked,
-  createdAt: new Date().toISOString()
-};
+    squares,
+    marked,
+    createdAt: new Date().toISOString()
+  };
 }
 
 function saveCardToStorage(data) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  } catch (e) {
+    console.warn("Could not save card to localStorage", e);
+  }
 }
 
 function loadCardFromStorage() {
@@ -82,8 +87,16 @@ function loadCardFromStorage() {
     if (!raw) return null;
     const data = JSON.parse(raw);
     if (!data || !Array.isArray(data.squares) || !Array.isArray(data.marked)) return null;
+
+    // Backward compatibility: if old cards don't have createdAt, assign one
+    if (!data.createdAt) {
+      data.createdAt = new Date().toISOString();
+      saveCardToStorage(data);
+    }
+
     return data;
-  } catch {
+  } catch (e) {
+    console.warn("Could not load card from localStorage", e);
     return null;
   }
 }
@@ -134,6 +147,8 @@ function setupInteractions(cardData) {
     if (!cell) return;
 
     const index = Number(cell.getAttribute("data-index"));
+    if (Number.isNaN(index)) return;
+
     cardData.marked[index] = !cardData.marked[index];
     cell.classList.toggle("marked", cardData.marked[index]);
 
@@ -145,21 +160,39 @@ function setupInteractions(cardData) {
   };
 }
 
+function displayTimestamp(cardData) {
+  if (!cardData || !cardData.createdAt) {
+    timestampEl.textContent = "";
+    return;
+  }
+  const date = new Date(cardData.createdAt);
+  timestampEl.textContent = "Card created: " + date.toLocaleString();
+}
+
 function init() {
   let cardData = loadCardFromStorage();
   if (!cardData) {
     cardData = generateNewCardData();
+    if (!cardData) return;
     saveCardToStorage(cardData);
   }
+
   renderCard(cardData);
   setupInteractions(cardData);
+  displayTimestamp(cardData);
 
   newCardBtn.onclick = () => {
-    if (!confirm("Generate a new card on this phone?")) return;
+    const confirmNew = confirm(
+      "Generate a new card on this phone?\n(This will replace your current card.)"
+    );
+    if (!confirmNew) return;
+
     const fresh = generateNewCardData();
+    if (!fresh) return;
     saveCardToStorage(fresh);
     renderCard(fresh);
     setupInteractions(fresh);
+    displayTimestamp(fresh);
   };
 }
 
