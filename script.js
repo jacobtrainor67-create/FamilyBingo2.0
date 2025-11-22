@@ -70,7 +70,6 @@ function generateNewCardData() {
   marked,
   createdAt: new Date().toISOString()
 };
-
 }
 
 function saveCardToStorage(data) {
