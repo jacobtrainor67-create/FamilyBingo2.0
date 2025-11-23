@@ -20,10 +20,11 @@ const BINGO_ITEMS = [
   "Racism",
   "Tonya shows up",
   "Parade is on TV",
-  "Someone compliments the stuffing",
-  "Weather is discussed",
-  "Board games or cards come out",
-  "Someone talks about sports"
+  "Tammy raises voice at someone to get out of kitchen",
+  "Sophie gets 'injured'",
+  "Nana and Papa show up >2 hours late",
+  "Nana and papa stop at McDonalds enroute",
+  "Nana accidentally roots for the opposite team as Gary"
 ];
 
 const BOARD_SIZE = 5;
